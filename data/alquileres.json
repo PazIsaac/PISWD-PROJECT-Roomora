@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "titulo": "Monoambiente Palermo",
+    "ubicacion": "Buenos Aires",
+    "tipo": "Monoambiente",
+    "precio": 450000,
+    "descripcion": "Luminoso, cerca del subte.",
+    "imagen": ""
+  },
+  {
+    "id": 2,
+    "titulo": "Duplex Belgrano",
+    "ubicacion": "Buenos Aires",
+    "tipo": "Duplex",
+    "precio": 780000,
+    "descripcion": "Dos plantas con balcón.",
+    "imagen": ""
+  },
+  {
+    "id": 3,
+    "titulo": "Departamento Centro",
+    "ubicacion": "Córdoba",
+    "tipo": "Departamento",
+    "precio": 520000,
+    "descripcion": "2 ambientes, cochera opcional.",
+    "imagen": ""
+  },
+  {
+    "id": 4,
+    "titulo": "PH San Telmo",
+    "ubicacion": "Buenos Aires",
+    "tipo": "PH",
+    "precio": 610000,
+    "descripcion": "Patio propio, estilo colonial.",
+    "imagen": ""
+  },
+  {
+    "id": 5,
+    "titulo": "Loft Puerto Madero",
+    "ubicacion": "Buenos Aires",
+    "tipo": "Loft",
+    "precio": 950000,
+    "descripcion": "Vista al río, amenities.",
+    "imagen": ""
+  },
+  {
+    "id": 6,
+    "titulo": "Monoambiente Rosario",
+    "ubicacion": "Rosario",
+    "tipo": "Monoambiente",
+    "precio": 380000,
+    "descripcion": "Reciclado a nuevo.",
+    "imagen": ""
+  },
+  {
+    "id": 7,
+    "titulo": "Duplex Mendoza",
+    "ubicacion": "Mendoza",
+    "tipo": "Duplex",
+    "precio": 490000,
+    "descripcion": "Zona residencial tranquila.",
+    "imagen": ""
+  },
+  {
+    "id": 8,
+    "titulo": "Casa La Plata",
+    "ubicacion": "La Plata",
+    "tipo": "Casa",
+    "precio": 720000,
+    "descripcion": "Jardín y garage.",
+    "imagen": ""
+  },
+  {
+    "id": 9,
+    "titulo": "Departamento Mar del Plata",
+    "ubicacion": "Mar del Plata",
+    "tipo": "Departamento",
+    "precio": 410000,
+    "descripcion": "A 4 cuadras de la playa.",
+    "imagen": ""
+  }
+]

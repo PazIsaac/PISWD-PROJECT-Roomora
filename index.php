@@ -1,45 +1,115 @@
 <?php
-$titulo = 'Roomora';
+require_once __DIR__ . '/includes/alquileres.php';
+require_once __DIR__ . '/includes/sesion.php';
+
+$usuario = usuarioLogueado();
+$puedeAlquilar = $usuario && $usuario['rol'] === 'cliente';
+
+$tituloPagina = 'Alquileres';
+$paginaActiva = 'inicio';
+$busquedaTipo = $_GET['busqueda'] ?? '';
+$tipoFiltro = $_GET['tipo'] ?? '';
+$soloDisponibles = !isset($_GET['todos']) || $_GET['todos'] !== '1';
+$ubicacionFiltro = $busquedaTipo;
+
+$dbError = null;
+try {
+    $alquileresFiltrados = cargarAlquileres($busquedaTipo, $tipoFiltro, $soloDisponibles);
+} catch (PDOException $e) {
+    $dbError = mensajeErrorDb();
+    $alquileresFiltrados = [];
+}
+
+require_once __DIR__ . '/includes/header.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="index.css">
-    <title><?php echo $titulo; ?></title>
-</head>
-<body>
-    <!-- <div class="contactos">
-        <h1>Bienvenidos a <?php echo $titulo; ?></h1>
-        <h2>contactos👇</h2>
-        <a href="1125797652"></a>
-        <a href="1130361637"></a>
-    </div>
-    <div class="empleados">
-        <a href="esclavo(aaron)"></a>
-        <a href="alexis"></a>
-    </div>-->
-    <header>
-        <nav>
-            <ul>
-                <li><a class="inicio" href="inicio.php">Inicio</a></li>
-                <li><a class="Registro" href="Registro.php">Registro</a></li>
-                <li><a class="Depa" href="Depa.php">Departamento</a></li>
-            </ul>
-        </nav>
-    </header>
+<div class="layout">
+    <aside class="sidebar">
+        <form class="sidebar-form" method="get" action="index.php" id="filtros">
+            <section class="filter-block">
+                <label class="filter-label serif" for="busqueda">Buscar tipo:</label>
+                <div class="filter-input-wrap">
+                    <span class="icon-search" aria-hidden="true">&#128269;</span>
+                    <input
+                        type="text"
+                        id="busqueda"
+                        name="busqueda"
+                        value="<?php echo htmlspecialchars($busquedaTipo); ?>"
+                        placeholder="Monoambiente, Duplex..."
+                    >
+                    <?php if ($busquedaTipo !== ''): ?>
+                        <a href="index.php<?php
+                            $qs = [];
+                            if ($tipoFiltro) $qs[] = 'tipo=' . urlencode($tipoFiltro);
+                            if (!$soloDisponibles) $qs[] = 'todos=1';
+                            echo $qs ? '?' . implode('&', $qs) : '';
+                        ?>" class="clear-btn" title="Limpiar búsqueda">&times;</a>
+                    <?php endif; ?>
+                </div>
+            </section>
 
-    <main>
-        <h1>Bienvenidos a <?php echo $titulo; ?></h1>
-        <p>En <?php echo $titulo; ?>, nos dedicamos a ofrecer las mejores soluciones para tus necesidades. Nuestro equipo de expertos está comprometido en brindarte un servicio excepcional y productos de alta calidad.</p>
-        <p>Explora nuestro sitio para descubrir más sobre nuestros servicios y cómo podemos ayudarte a alcanzar tus objetivos.</p>
+            <section class="filter-block">
+                <label class="filter-label" for="tipo">Tipo de Ambiente:</label>
+                <select id="tipo" name="tipo" class="filter-select">
+                    <option value="">Todos</option>
+                    <?php foreach (TIPOS_AMBIENTE as $tipo): ?>
+                        <option value="<?php echo htmlspecialchars($tipo); ?>" <?php echo strcasecmp($tipoFiltro, $tipo) === 0 ? 'selected' : ''; ?>>
+                            <?php echo htmlspecialchars($tipo); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </section>
+
+            <section class="filter-block filter-check">
+                <label class="filter-check-label">
+                    <input type="checkbox" name="solo_disp" value="1" <?php echo $soloDisponibles ? 'checked' : ''; ?>
+                           onchange="document.getElementById('todos').value = this.checked ? '0' : '1'; document.getElementById('filtros').submit();">
+                    Solo disponibles
+                </label>
+                <input type="hidden" name="todos" id="todos" value="<?php echo $soloDisponibles ? '0' : '1'; ?>">
+            </section>
+
+            <button type="submit" class="btn-filter">Aplicar filtros</button>
+        </form>
+    </aside>
+
+    <main class="content">
+        <?php if ($dbError): ?>
+            <p class="msg-error"><?php echo htmlspecialchars($dbError); ?></p>
+        <?php endif; ?>
+        <?php if (!empty($_GET['creado'])): ?>
+            <p class="msg-ok banner-ok">Departamento registrado correctamente.</p>
+        <?php endif; ?>
+        <?php if (empty($alquileresFiltrados)): ?>
+            <p class="empty-msg">No hay departamentos que coincidan con los filtros.</p>
+        <?php else: ?>
+            <div class="grid-alquileres">
+                <?php foreach ($alquileresFiltrados as $dep): ?>
+                    <article class="card-alquiler <?php echo $dep['disponible'] ? '' : 'card-no-disponible'; ?>">
+                        <div class="card-imagen"></div>
+                        <div class="card-info">
+                            <h3><?php echo htmlspecialchars($dep['tipo']); ?> #<?php echo (int) $dep['id']; ?></h3>
+                            <p class="card-meta">
+                                <?php echo (int) $dep['ambientes']; ?> amb. ·
+                                <?php echo (int) $dep['metros_cuadrados']; ?> m² ·
+                                <?php echo etiquetaDisponible($dep['disponible']); ?>
+                            </p>
+                            <p class="card-precio"><?php echo formatearPrecio($dep['precio']); ?></p>
+                            <?php if ($puedeAlquilar && $dep['disponible']): ?>
+                                <a href="rentar.php?id=<?php echo (int) $dep['id']; ?>" class="btn-rentar">Alquilar</a>
+                            <?php endif; ?>
+                        </div>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
     </main>
+</div>
 
-    <footer>
-        
-    </footer>
+<script>
+document.getElementById('tipo').addEventListener('change', function () {
+    document.getElementById('filtros').submit();
+});
+</script>
 
-</body>
-</html>
+<?php require_once __DIR__ . '/includes/footer.php'; ?>
