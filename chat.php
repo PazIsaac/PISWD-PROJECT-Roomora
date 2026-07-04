@@ -1,4 +1,4 @@
-k<?php
+<?php
 require_once __DIR__ . '/includes/alquileres.php';
 require_once __DIR__ . '/includes/sesion.php';
 requerirLogin();
