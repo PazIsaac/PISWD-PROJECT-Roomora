@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/sesion.php';
 
 $tituloPagina = 'Registrarse';
-$paginaActiva = 'login';
+$paginaActiva = '';
 $error = '';
 $exito = '';
 

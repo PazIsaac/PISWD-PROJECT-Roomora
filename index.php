@@ -1,9 +1,5 @@
 <?php
 require_once __DIR__ . '/includes/alquileres.php';
-require_once __DIR__ . '/includes/sesion.php';
-
-$usuario = usuarioLogueado();
-$puedeAlquilar = $usuario && $usuario['rol'] === 'cliente';
 
 $tituloPagina = 'Alquileres';
 $paginaActiva = 'inicio';
@@ -95,9 +91,6 @@ require_once __DIR__ . '/includes/header.php';
                                 <?php echo etiquetaDisponible($dep['disponible']); ?>
                             </p>
                             <p class="card-precio"><?php echo formatearPrecio($dep['precio']); ?></p>
-                            <?php if ($puedeAlquilar && $dep['disponible']): ?>
-                                <a href="rentar.php?id=<?php echo (int) $dep['id']; ?>" class="btn-rentar">Alquilar</a>
-                            <?php endif; ?>
                         </div>
                     </article>
                 <?php endforeach; ?>

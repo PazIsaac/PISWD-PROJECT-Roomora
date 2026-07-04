@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/sesion.php';
 
 $tituloPagina = 'Iniciar sesión';
-$paginaActiva = 'login';
+$paginaActiva = '';
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
