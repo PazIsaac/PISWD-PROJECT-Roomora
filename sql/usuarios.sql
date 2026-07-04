@@ -6,3 +6,4 @@ CREATE TABLE IF NOT EXISTS usuarios (
     rol ENUM('admin', 'cliente') NOT NULL DEFAULT 'cliente',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*hola*/

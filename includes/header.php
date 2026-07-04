@@ -42,6 +42,11 @@ $esAdmin = $usuario && $usuario['rol'] === 'admin';
                 <a href="departamento.php" class="nav-btn <?php echo $paginaActiva === 'departamento' ? 'active' : ''; ?>">Departamento</a>
             <?php endif; ?>
             <?php if ($usuario): ?>
+                <?php if (!$esAdmin): ?>
+                    <a href="mis-alquileres.php" class="nav-btn <?php echo $paginaActiva === 'mis-alquileres' ? 'active' : ''; ?>">Mis alquileres</a>
+                <?php else: ?>
+                    <a href="gestionar-alquileres.php" class="nav-btn <?php echo $paginaActiva === 'gestionar-alquileres' ? 'active' : ''; ?>">Solicitudes</a>
+                <?php endif; ?>
                 <span class="nav-user"><?php echo htmlspecialchars($usuario['nombre']); ?></span>
                 <a href="logout.php" class="nav-btn">Salir</a>
             <?php else: ?>

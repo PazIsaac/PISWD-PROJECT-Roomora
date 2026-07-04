@@ -33,3 +33,4 @@ INSERT INTO `departamentos` (`tipo`, `precio`, `ambientes`, `metros_cuadrados`, 
 ('Departamento', 410000.00, 2, 45, 1);
 
 COMMIT;
+/*hola*/

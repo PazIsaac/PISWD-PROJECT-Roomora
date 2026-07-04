@@ -19,3 +19,4 @@ CREATE TABLE IF NOT EXISTS mensajes (
     FOREIGN KEY (renta_id) REFERENCES rentas(id) ON DELETE CASCADE,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*hola*/
