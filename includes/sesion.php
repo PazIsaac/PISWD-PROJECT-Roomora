@@ -1,5 +1,5 @@
 <?php
-
+// a
 require_once __DIR__ . '/db.php';
 
 function iniciarSesion(): void

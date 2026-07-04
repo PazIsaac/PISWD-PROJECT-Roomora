@@ -1,5 +1,5 @@
 <?php
-
+// hola
 require_once __DIR__ . '/db.php';
 
 define('TABLA_DEPARTAMENTOS', 'departamentos');

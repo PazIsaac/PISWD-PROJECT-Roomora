@@ -49,3 +49,4 @@ $esAdmin = $usuario && $usuario['rol'] === 'admin';
             <?php endif; ?>
         </nav>
     </header>
+hola
