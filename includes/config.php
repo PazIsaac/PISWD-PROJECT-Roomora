@@ -17,4 +17,3 @@ if (file_exists($localFile)) {
 }
 
 return $defaults;
-// hola

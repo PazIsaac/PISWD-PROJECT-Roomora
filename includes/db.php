@@ -25,4 +25,3 @@ function obtenerConexion(): PDO
 
     return $pdo;
 }
-// hola

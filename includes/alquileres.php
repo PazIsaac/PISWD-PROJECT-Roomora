@@ -257,13 +257,13 @@ function buscarRentaPorId(int $rentaId): ?array
 
 function etiquetaEstadoRenta(string $estado): string
 {
-    return match ($estado) {
-        'pendiente' => '<span class="status-badge status-pendiente">Pendiente</span>',
-        'aprobado' => '<span class="status-badge status-aprobado">Aprobado</span>',
-        'rechazado' => '<span class="status-badge status-rechazado">Rechazado</span>',
-        'cancelado' => '<span class="status-badge status-cancelado">Cancelado</span>',
-        default => htmlspecialchars($estado),
-    };
+    switch ($estado) {
+        case 'pendiente': return '<span class="status-badge status-pendiente">Pendiente</span>';
+        case 'aprobado': return '<span class="status-badge status-aprobado">Aprobado</span>';
+        case 'rechazado': return '<span class="status-badge status-rechazado">Rechazado</span>';
+        case 'cancelado': return '<span class="status-badge status-cancelado">Cancelado</span>';
+        default: return htmlspecialchars($estado);
+    }
 }
 
 /* ──────────── Chat / Mensajes ──────────── */
